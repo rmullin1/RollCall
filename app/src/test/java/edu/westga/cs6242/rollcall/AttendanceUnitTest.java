@@ -12,7 +12,7 @@ import edu.westga.cs6242.rollcall.model.Student;
 /**
  * Unit Tests for the AddendanceRecord class
  */
-public class AttendanceRecordUnitTest {
+public class AttendanceUnitTest {
 
     private Student student;
     private SchoolClass schoolClass;
