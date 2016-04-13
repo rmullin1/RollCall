@@ -7,8 +7,8 @@ package edu.westga.cs6242.rollcall.model;
 public class Student {
     int studentNo;
     String studentId;
-    String studentFirstName;
-    String studentLastName;
+    String firstName;
+    String lastName;
 
     /**
      * ACCESSSORS
@@ -29,20 +29,20 @@ public class Student {
         this.studentId = value;
     }
 
-    public String getStudentFirstName() {
-        return this.studentFirstName;
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    public void setStudentFirstName(String value) {
-        this.studentFirstName = value;
+    public void setFirstName(String value) {
+        this.firstName = value;
     }
 
-    public String getStudentLastName() {
-        return this.studentLastName;
+    public String getLastName() {
+        return this.lastName;
     }
 
-    public void setStudentLastName(String value) {
-        this.studentLastName = value;
+    public void setLastName(String value) {
+        this.lastName = value;
     }
 
     /**
@@ -51,7 +51,7 @@ public class Student {
      * @return - student first name and last name
      */
     public String getStudentName() {
-        return this.studentFirstName + " " + this.studentLastName;
+        return this.firstName + " " + this.lastName;
     }
 
     /**
