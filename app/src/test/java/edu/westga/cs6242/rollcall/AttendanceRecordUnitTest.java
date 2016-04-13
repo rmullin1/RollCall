@@ -4,7 +4,8 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import static org.junit.Assert.*;
-import edu.westga.cs6242.rollcall.model.AttendanceRecord;
+
+import edu.westga.cs6242.rollcall.model.Attendance;
 import edu.westga.cs6242.rollcall.model.SchoolClass;
 import edu.westga.cs6242.rollcall.model.Student;
 
@@ -30,8 +31,8 @@ public class AttendanceRecordUnitTest {
         this.student = new Student();
         this.student.setStudentNo(2);
         this.student.setStudentId("S11");
-        this.student.setStudentFirstName("John");
-        this.student.setStudentLastName("Smith");
+        this.student.setFirstName("John");
+        this.student.setLastName("Smith");
 
         this.calendar = Calendar.getInstance();
         this.calendar.set(2016, Calendar.APRIL, 10, 18, 0);
@@ -40,7 +41,7 @@ public class AttendanceRecordUnitTest {
     @Test
     public void testToString1() {
         setup();
-        AttendanceRecord rec = new AttendanceRecord();
+        Attendance rec = new Attendance();
         rec.setAttendanceDate(this.calendar.getTime());
         rec.setSchoolClass(this.schoolClass);
         rec.setStudent(this.student);
@@ -52,10 +53,10 @@ public class AttendanceRecordUnitTest {
     @Test
     public void testToString2() {
         setup();
-        this.student.setStudentFirstName("Jill");
-        this.student.setStudentLastName("Brown");
+        this.student.setFirstName("Jill");
+        this.student.setLastName("Brown");
         this.schoolClass.setClassName("Math 102");
-        AttendanceRecord rec = new AttendanceRecord();
+        Attendance rec = new Attendance();
         this.calendar.set(Calendar.HOUR_OF_DAY, 20);
         rec.setAttendanceDate(this.calendar.getTime());
         rec.setSchoolClass(this.schoolClass);
