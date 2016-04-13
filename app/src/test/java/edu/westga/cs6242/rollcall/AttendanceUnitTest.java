@@ -42,11 +42,12 @@ public class AttendanceUnitTest {
     public void testToString1() {
         setup();
         Attendance rec = new Attendance();
+        rec.setAttendanceNo(1);
         rec.setAttendanceDate(this.calendar.getTime());
         rec.setSchoolClass(this.schoolClass);
         rec.setStudent(this.student);
         rec.setWasPresent(true);
-        assertEquals("Date: 2016-04-10 18:00, Class: Math 101, Student: John Smith, Present",
+        assertEquals("AttendanceNo: 1, Date: 2016-04-10 18:00, Class: Math 101, Student: John Smith, Present",
                 rec.toString());
     }
 
@@ -58,12 +59,13 @@ public class AttendanceUnitTest {
         this.schoolClass.setClassName("Math 102");
         Attendance rec = new Attendance();
         this.calendar.set(Calendar.HOUR_OF_DAY, 20);
+        rec.setAttendanceNo(1);
         rec.setAttendanceDate(this.calendar.getTime());
         rec.setSchoolClass(this.schoolClass);
         rec.setStudent(this.student);
         rec.setWasPresent(false);
 
-        assertEquals("Date: 2016-04-10 20:00, Class: Math 102, Student: Jill Brown, Absent",
+        assertEquals("AttendanceNo: 1, Date: 2016-04-10 20:00, Class: Math 102, Student: Jill Brown, Absent",
                 rec.toString());
     }
 

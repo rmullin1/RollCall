@@ -64,7 +64,7 @@ public class Attendance {
      */
     @Override
     public String toString() {
-        return String.format("RecordNo: %d, Date: %s, Class: %s, Student: %s, %s",
+        return String.format("AttendanceNo: %d, Date: %s, Class: %s, Student: %s, %s",
                 this.attendanceNo,
                 new SimpleDateFormat("yyyy-MM-dd HH:mm").format(this.attendanceDate),
                 this.schoolClass.getClassName(),
