@@ -65,10 +65,10 @@ public class Attendance {
     @Override
     public String toString() {
         return String.format("AttendanceNo: %d, Date: %s, Class: %s, Student: %s, %s",
-                this.attendanceNo,
-                new SimpleDateFormat("yyyy-MM-dd HH:mm").format(this.attendanceDate),
-                this.schoolClass.getClassName(),
-                this.student.getStudentName(), this.wasPresent ? "Present" : "Absent");
+                this.getAttendanceNo(),
+                new SimpleDateFormat("yyyy-MM-dd HH:mm").format(this.getAttendanceDate()),
+                this.getSchoolClass().getClassName(),
+                this.getStudent().getStudentName(), this.getWasPresent() ? "Present" : "Absent");
     }
 
 

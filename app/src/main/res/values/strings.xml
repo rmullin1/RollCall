@@ -2,4 +2,28 @@
     <string name="app_name">RollCall</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_call_roll">Call Class Roll</string>
+    <string name="add_new_class">Add New Class</string>
+    <string name="new_class_id">New Class ID</string>
+    <string name="new_class_id_hint"><font size="12">new unique class id"</font></string>
+    <string name="new_class_name">New Class Name</string>
+    <string name="new_class_name_hint"><font size="12">new class name</font></string>
+    <string name="add_class">ADD CLASS</string>
+    <string name="edit_class">Edit/Delete Class</string>
+    <string name="update_class">UPDATE CLASS</string>
+    <string name="delete_class">DELETE CLASS</string>
+    <string name="select_class">Select Class</string>
+
+    <string name="add_new_student">Add New Student</string>
+    <string name="new_student_id">New Student ID</string>
+    <string name="new_student_id_hint"><font size="12">new unique student id"</font></string>
+    <string name="new_student_first_name">New Student First Name</string>
+    <string name="new_student_first_name_hint"><font size="12">new student first name</font></string>
+    <string name="new_student_last_name">New Student Last Name</string>
+    <string name="new_student_last_name_hint"><font size="12">new student last name</font></string>
+    <string name="add_student">ADD STUDENT</string>
+    <string name="edit_student">Edit/Delete Student</string>
+    <string name="update_student">UPDATE STUDENT</string>
+    <string name="delete_student">DELETE STUDENT</string>
+    <string name="select_student">Select Student</string>
+
 </resources>

@@ -1,10 +1,13 @@
 package edu.westga.cs6242.rollcall;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import edu.westga.cs6242.rollcall.controller.Controller;
+import edu.westga.cs6242.rollcall.model.SchoolClass;
 
 public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
 
@@ -63,12 +67,42 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
     public void button_onClick(View view) {
         Button button = (Button)findViewById(R.id.btnButton);
-        button.setBackgroundColor(Color.RED);
         Intent intent = new Intent(this, CallRollActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, "Test Info");
         startActivity(intent);
     }
 
+    public void btnAddClass_onClick(View view) {
+        Button button = (Button)findViewById(R.id.btnAddClass);
+        Intent intent = new Intent(this, AddClassActivity.class);
+        startActivity(intent);
+    }//btnAddClass_onClick
+
+    public void btnEditClass_onClick(View view) {
+        Button button = (Button)findViewById(R.id.btnEditClass);
+        Intent intent = new Intent(this, EditClassActivity.class);
+        startActivity(intent);
+    }//btnEditClass_onClick
+
+    public void btnAddStudent_onClick(View view) {
+        Button button = (Button)findViewById(R.id.btnAddStudent);
+        Intent intent = new Intent(this, AddStudentActivity.class);
+        startActivity(intent);
+    }//btnAddStudent_onClick()
+
+    public void btnEditStudent_onClick(View view) {
+        Button button = (Button)findViewById(R.id.btnEditStudent);
+        Intent intent = new Intent(this, EditStudentActivity.class);
+        startActivity(intent);
+    }//btnEditStudent_onClick()
+
+
+    public void btnTest_onClick(View view) {
+        boolean value = ShowDialog("This is a test");
+
+        ArrayList<SchoolClass> list = controller.getSchoolClassList();
+        int ll = list.size();
+        int xx = 1;
+    }//btnTest_onClick
     //--------------------
 
     private void testSpinner() {
@@ -117,5 +151,37 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         int x = 1;  //DEBUG STUB
         Toast.makeText(parent.getContext(), "Nothing Selected: ", Toast.LENGTH_LONG).show();
     }//onNothingSelected
+
+
+    //---------------------------------
+    //Test Dialog Alert
+    boolean dialogReturnValue;
+    private boolean ShowDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogReturnValue = true;
+                        dialog.cancel();
+                    }
+                });
+
+        builder.setNegativeButton(
+                "Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogReturnValue = false;
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder.create();
+        alert11.show();
+        return dialogReturnValue;
+    }//ShowDialog()
 
 }

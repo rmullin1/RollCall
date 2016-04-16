@@ -35,6 +35,8 @@ public class SchoolClass {
         this.className = value;
     }
 
+    public String getClassNameEx() { return String.format("%s (%s)",
+            this.getClassName(), this.getClassId());}
     /**
      * toString()
      *      Override of Object.toString() to write out SchoolClass instance as string
@@ -43,7 +45,7 @@ public class SchoolClass {
     @Override
     public String toString() {
         return String.format("ClassNo: %d, ClassId: %s, ClassName: %s",
-                this.classNo, this.classId, this.className);
+                this.getClassNo(), this.getClassId(), this.getClassName());
     }
 
 }//class

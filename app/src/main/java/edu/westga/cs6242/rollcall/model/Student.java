@@ -54,6 +54,9 @@ public class Student {
         return this.firstName + " " + this.lastName;
     }
 
+    public String getStudentNameEx() { return String.format("%s (%s)",
+            this.getStudentName(), this.getStudentId());}
+
     /**
      * toString()
      *      Override of Object.toString() to write out Student instance as string
@@ -62,6 +65,6 @@ public class Student {
     @Override
     public String toString() {
         return String.format("StudentNo: %d, StudentId: %s, StudentName: %s",
-                this.studentNo, this.studentId, this.getStudentName());
+                this.getStudentNo(), this.getStudentId(), this.getStudentName());
     }
 }//class

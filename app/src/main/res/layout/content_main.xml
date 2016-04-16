@@ -19,9 +19,10 @@
         android:layout_height="wrap_content"
         android:text="Button"
         android:id="@+id/btnButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="button_onClick" />
+        android:onClick="button_onClick"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/spnClass"
+        android:layout_centerHorizontal="true" />
 
     <Spinner
         android:layout_width="100dp"
@@ -45,4 +46,65 @@
         android:layout_alignParentStart="false"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="25dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Class"
+        android:id="@+id/btnAddClass"
+        android:onClick="btnAddClass_onClick"
+        android:layout_below="@+id/btnButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btnAddStudent"
+        android:layout_alignEnd="@+id/btnAddStudent" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Class"
+        android:id="@+id/btnEditClass"
+        android:onClick="btnEditClass_onClick"
+        android:layout_below="@+id/btnAddClass"
+        android:layout_alignLeft="@+id/btnAddClass"
+        android:layout_alignStart="@+id/btnAddClass"
+        android:layout_alignRight="@+id/btnAddClass"
+        android:layout_alignEnd="@+id/btnAddClass" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test"
+        android:id="@+id/btnTest"
+        android:onClick="btnTest_onClick"
+        android:layout_marginBottom="65dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Student"
+        android:id="@+id/btnAddStudent"
+        android:onClick="btnAddStudent_onClick"
+        android:layout_below="@+id/btnEditClass"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Student"
+        android:id="@+id/btnEditStudent"
+        android:onClick="btnEditStudent_onClick"
+        android:layout_below="@+id/btnAddStudent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
