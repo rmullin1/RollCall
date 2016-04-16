@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import edu.westga.cs6242.rollcall.model.*;
@@ -17,8 +18,6 @@ public class DbAccess {
     /**
      * DateToString()
      *      Converts a Date value to a string for SqlLite database
-     * @param date - value;
-     * @return - string equivalent in ISO standard format
      */
     public static String DateToString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -28,57 +27,47 @@ public class DbAccess {
     /**
      * StringToDate()
      *      Converts a String value to a Date for SqlLite database
-     * @param dateString - ISO standard date
-     * @return  - Date equivalent of string
-     * @throws ParseException
      */
     public static Date StringToDate(String dateString) throws ParseException {
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return dateFormat.parse(dateString);
     }
 
+    //=============================================================================================
+    // SCHOOL CLASS ACCESS METHODS
+
     /**
      * addSchoolClass()
      *      Adds a new SchoolClass entry to the database
-     * @param obj - SchoolClass object to add
-     * @return - returns the new classNo for the entry
      */
-    public int addSchoolClass(SQLiteDatabase db, SchoolClass obj) {
+    public int addSchoolClass(SQLiteDatabase db, String classId, String className) {
         try {
             ContentValues values = new ContentValues();
-            values.put("classId", obj.getClassId());
-            values.put("className", obj.getClassName());
+            values.put("classId", classId);
+            values.put("className", className);
             int classNo = (int)db.insert(DbHandler.SCHOOLCLASS_TABLE_NAME, null, values);
-            db.close();
-            obj.setClassNo(classNo);
+            if (classNo < 1)
+                throw new Exception("db.insert() < 1");
             return classNo;
-
         } catch (Exception ex) {
-            throw ex;
-        }
-        finally {
-            if (db != null)
-                db.close();
+            return -1;
         }
     }//addSchoolClass()
 
     /**
      * getSchoolClassByNo()
      *      Gets a SchoolClass object specified by the classNo.
-     * @param db - database
-     * @param classNo - classNo
-     * @return - matching class object
      */
     public SchoolClass getSchoolClassByNo(SQLiteDatabase db, int classNo) {
-        SchoolClass schoolClass = new SchoolClass();
+        SchoolClass schoolClass = null;
         String sql =
                 "SELECT * FROM SchoolClass WHERE classNo = ?";
-
         try {
             String[] args = {Integer.toString(classNo)};
             Cursor cursor = db.rawQuery(sql, args);
             if (cursor.moveToFirst()) {
-                schoolClass.setClassNo(classNo);
+                schoolClass = new SchoolClass();
+                schoolClass.setClassNo(cursor.getInt(0));
                 schoolClass.setClassId(cursor.getString(1));
                 schoolClass.setClassName(cursor.getString(2));
             }
@@ -88,41 +77,103 @@ public class DbAccess {
         }
     }//getSchoolClassByNo()
 
-
     /**
-     * addStudent()
-     *      Adds a new Student entry to the database
-     * @param obj - Student object to add
-     * @return - returns the new studentNo for the entry
+     * getSchoolClassNoById
+     *      Gets the schoolClassNo specified by the classId
      */
-    public int addStudent(SQLiteDatabase db, Student obj) {
+    public int getSchoolClassNoById (SQLiteDatabase db, String classId){
+        int schoolClassNo = -1;
+        String sql =
+                "SELECT * FROM SchoolClass WHERE classId = ?";
+
         try {
-            ContentValues values = new ContentValues();
-            values.put("studentId", obj.getStudentId());
-            values.put("studentFirstName", obj.getFirstName());
-            values.put("studentLastName", obj.getLastName());
-            int studentNo = (int)db.insert(DbHandler.STUDENT_TABLE_NAME, null, values);
-            db.close();
-            obj.setStudentNo(studentNo);
-            return studentNo;
+            String[] args = {classId};
+            Cursor cursor = db.rawQuery(sql, args);
+            if (cursor.moveToFirst()) {
+                schoolClassNo = cursor.getInt(0);
+            }
+            return schoolClassNo;
         } catch (Exception ex) {
             throw ex;
         }
-        finally {
-            if (db != null)
-                db.close();
+    }//getSchoolClassNoById
+
+    /**
+     * updateSchoolClass()
+     *      Updates SchoolClass entry to the database
+     */
+    public boolean updateSchoolClass(SQLiteDatabase db, int classNo, String classId, String className) {
+        try {
+            String sql =
+                    "UPDATE SchoolClass " +
+                    "SET classId = ?, className = ? " +
+                    "WHERE classNo = ?";
+            Object[] args = {classId, className, classNo};
+            db.execSQL(sql, args);
+            return true;
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }//updateSchoolClass()
+
+    /**
+     * deleteSchoolClass()
+     *      Deletes the school class entry specified by classNo
+     */
+    public void deleteSchoolClass(SQLiteDatabase db, int classNo) {
+        try {
+            String sql =
+                    "DELETE FROM SchoolClass WHERE classNo = ?";
+            Object[] args = {classNo};
+            db.execSQL(sql, args);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }//deleteSchoolClass()
+
+    public ArrayList<SchoolClass> getClassList(SQLiteDatabase db) {
+        ArrayList<SchoolClass> list = new ArrayList<SchoolClass>();
+        String sql = "SELECT * FROM SchoolClass ";
+        Cursor cursor = db.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            SchoolClass schoolClass = new SchoolClass();
+            schoolClass.setClassNo(cursor.getInt(0));
+            schoolClass.setClassId(cursor.getString(1));
+            schoolClass.setClassName(cursor.getString(2));
+            list.add(schoolClass);
+        }
+        cursor.close();
+        return list;
+    }//getClassList()
+
+
+    // SCHOOL CLASS ACCESS METHODS
+    //=============================================================================================
+    // STUDENT ACCESS METHODS
+
+    /**
+     * addStudent()
+     */
+    public int addStudent(SQLiteDatabase db, String studentId, String firstName, String lastName) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put("studentId", studentId);
+            values.put("studentFirstName", firstName);
+            values.put("studentLastName", lastName);
+            int studentNo = (int)db.insert(DbHandler.STUDENT_TABLE_NAME, null, values);
+            return studentNo;
+        } catch (Exception ex) {
+            throw ex;
         }
     }//AddStudent()
 
     /**
      * getStudentByNo()
      *      Gets a Student object specified by the studentNo.
-     * @param db - database
-     * @param studentNo - studentNo
-     * @return - matching class object
      */
     public Student getStudentByNo(SQLiteDatabase db, int studentNo) {
-        Student student = new Student();
+        Student student = null;
         String sql =
                 "SELECT * FROM Student WHERE studentNo = ?";
 
@@ -130,7 +181,8 @@ public class DbAccess {
             String[] args = {Integer.toString(studentNo)};
             Cursor cursor = db.rawQuery(sql, args);
             if (cursor.moveToFirst()) {
-                student.setStudentNo(studentNo);
+                student = new Student();
+                student.setStudentNo(cursor.getInt(0));
                 student.setStudentId(cursor.getString(1));
                 student.setFirstName(cursor.getString(2));
                 student.setLastName(cursor.getString(3));
@@ -141,14 +193,84 @@ public class DbAccess {
         }
     }//getStudentByNo()
 
+    /**
+     * getStudentNoById()
+     *      Gets a StudentNo specified by the studentId
+     */
+    public int getStudentNoById(SQLiteDatabase db, String studentId) {
+        int studentNo = -1;
+        String sql =
+                "SELECT * FROM Student WHERE studentId = ?";
+        try {
+            String[] args = {studentId};
+            Cursor cursor = db.rawQuery(sql, args);
+            if (cursor.moveToFirst()) {
+                studentNo = cursor.getInt(0);
+            }
+            return studentNo;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }//getStudentByNo()
+
+    /**
+     * updateStudent()
+     *      Updates Student entry to the database
+     */
+    public boolean updateStudent(SQLiteDatabase db, int studentNo,
+                                 String studentId, String firstName, String lastName) {
+        try {
+            String sql =
+                    "UPDATE Student " +
+                            "SET studentId = ?, studentFirstName = ?, studentLastName = ? " +
+                            "WHERE studentNo = ?";
+            Object[] args = {studentId, firstName, lastName, studentNo};
+            db.execSQL(sql, args);
+            return true;
+        } catch (Exception ex) {
+            String x = ex.getMessage();
+            throw ex;
+        }
+    }//updateStudent()
+
+    /**
+     * deleteStudent()
+     *      Deletes the student entry specified by studentNo
+     */
+    public void deleteStudent(SQLiteDatabase db, int studentNo) {
+        try {
+            String sql =
+                    "DELETE FROM Student WHERE studentNo = ?";
+            Object[] args = {studentNo};
+            db.execSQL(sql, args);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }//deleteStudent()
+
+    public ArrayList<Student> getStudentList(SQLiteDatabase db) {
+        ArrayList<Student> list = new ArrayList<Student>();
+        String sql = "SELECT * FROM Student ";
+        Cursor cursor = db.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            Student student = new Student();
+            student.setStudentNo(cursor.getInt(0));
+            student.setStudentId(cursor.getString(1));
+            student.setFirstName(cursor.getString(2));
+            student.setLastName(cursor.getString(3));
+            list.add(student);
+        }
+        cursor.close();
+        return list;
+    }//getStudentList()
+
+    // STUDENT ACCESS METHODS
+    //=============================================================================================
+    // ATTDNDANCE ACCESS METHODS
 
     /**
      * addAttendanceRecord()
      *      Adds a new Attendance entry to the database
-     * @param date - date of the Attendance
-     * @param classNo - classNo for the class
-     * @param studentNo - studentno for the student
-     * @return - returns the new AttendanceNo for the entry
      */
     public int addAttendance(SQLiteDatabase db,
                              Date date, int classNo, int studentNo, boolean wasPresent) {
@@ -173,9 +295,6 @@ public class DbAccess {
     /**
      * getAttendanceByNo()
      *      Gets an Attendance object specified by the recordNo.
-     * @param db - database
-     * @param recordNo - recordNo
-     * @return - matching class object
      */
     public Attendance getAttendanceByNo(SQLiteDatabase db, int recordNo) throws ParseException {
         Attendance attendance = new Attendance();
@@ -202,21 +321,5 @@ public class DbAccess {
         }
     }//getAttendanceByNo()
 
-    /**
-     * DeleteSchoolClass()
-     * @param classNo - classNo to delete
-     */
-    public void DeleteSchoolClass(int classNo) {
-        SQLiteDatabase db = null;
-        try {
-            String sql =
-                    "DELETE FROM ? WHERE classNo = ?";
-//            Object[] args = {SCHOOLCLASS_TABLE_NAME, classNo};
-//            db = this.getWritableDatabase();
-//            db.execSQL(sql, args);
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }//DeleteSchoolClass()
 
 }//class

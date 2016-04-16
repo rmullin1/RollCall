@@ -40,16 +40,16 @@ public class DbHandler extends SQLiteOpenHelper {
             sql =
                     "CREATE TABLE " + SCHOOLCLASS_TABLE_NAME + " ( " +
                             "classNo INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                            "classId varChar(50) NOT NULL UNIQUE, " +
-                            "className VARCHAR(50) NOT NULL)";
+                            "classId varChar(30) NOT NULL UNIQUE, " +
+                            "className VARCHAR(30) NOT NULL)";
             db.execSQL(sql);
 
             sql =
                     "CREATE TABLE " + STUDENT_TABLE_NAME + "( " +
                             "studentNo INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                            "studentId VARCHAR(50) UNIQUE NOT NULL, " +
-                            "studentFirstName VARCHAR(50) NOT NULL, " +
-                            "studentLastName VARCHAR(50) NOT NULL)";
+                            "studentId VARCHAR(30) UNIQUE NOT NULL, " +
+                            "studentFirstName VARCHAR(30) NOT NULL, " +
+                            "studentLastName VARCHAR(30) NOT NULL)";
             db.execSQL(sql);
 
             sql =
