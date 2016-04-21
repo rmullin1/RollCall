@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import edu.westga.cs6242.rollcall.model.*;
@@ -12,7 +13,7 @@ import edu.westga.cs6242.rollcall.dbaccess.*;
 /**
  * Created by Wayne on 4/12/2016.
  */
-public class DatabaseTests extends ActivityInstrumentationTestCase2<MainActivity> {
+public class AADatabaseTests extends ActivityInstrumentationTestCase2<MainActivity> {
 
     private DbHandler dbHandler = null;
     private SchoolClass schoolClass = null;
@@ -20,7 +21,7 @@ public class DatabaseTests extends ActivityInstrumentationTestCase2<MainActivity
     private Attendance attendance = null;
     private DbAccess dbAccess = null;
 
-    public DatabaseTests() {
+    public AADatabaseTests() {
         super(MainActivity.class);
     }//constructor
 
@@ -53,10 +54,11 @@ public class DatabaseTests extends ActivityInstrumentationTestCase2<MainActivity
     //test adding School Class to database
     public void testSchoolClassTableAdd() {
         try {
-            setUp(false);
+            setUp(true);
             DbHandler handler = new DbHandler(getInstrumentation().getTargetContext());
             SQLiteDatabase db = dbHandler.getWritableDatabase();
             int classNo = dbAccess.addSchoolClass(db, "M103", "Math 103");
+            db.close();
             assertTrue(classNo > 0);
         } catch (Exception ex) {
             assertTrue(false);
@@ -70,6 +72,7 @@ public class DatabaseTests extends ActivityInstrumentationTestCase2<MainActivity
             DbHandler handler = new DbHandler(getInstrumentation().getTargetContext());
             SQLiteDatabase db = dbHandler.getReadableDatabase();
             SchoolClass schoolClass = dbAccess.getSchoolClassByNo(db, 1);
+            db.close();
             assertEquals(schoolClass.getClassName(), "Math 103");
             assertEquals(schoolClass.getClassId(), "M103");
         } catch (Exception ex) {
@@ -84,6 +87,7 @@ public class DatabaseTests extends ActivityInstrumentationTestCase2<MainActivity
             DbHandler handler = new DbHandler(getInstrumentation().getTargetContext());
             SQLiteDatabase db = dbHandler.getReadableDatabase();
             int classNo = dbAccess.getSchoolClassNoById(db, "M103");
+            db.close();
             assertEquals(classNo, 1);
         } catch (Exception ex) {
             assertTrue(false);
@@ -98,6 +102,7 @@ public class DatabaseTests extends ActivityInstrumentationTestCase2<MainActivity
             SQLiteDatabase db = dbHandler.getReadableDatabase();
             boolean value = dbAccess.updateSchoolClass(db, 1, "X103", "MATHX 103");
             SchoolClass schoolClass = dbAccess.getSchoolClassByNo(db, 1);
+            db.close();
             assertEquals(1, schoolClass.getClassNo());
             assertEquals("X103", schoolClass.getClassId());
             assertEquals("MATHX 103", schoolClass.getClassName());
@@ -114,6 +119,7 @@ public class DatabaseTests extends ActivityInstrumentationTestCase2<MainActivity
 
             SQLiteDatabase db = dbHandler.getWritableDatabase();
             int studentNo = dbAccess.addStudent(db, "S10", "John", "Smith");
+            db.close();
             assertTrue(studentNo > 0);
         } catch (Exception ex) {
             assertTrue(false);
@@ -126,6 +132,7 @@ public class DatabaseTests extends ActivityInstrumentationTestCase2<MainActivity
             DbHandler handler = new DbHandler(getInstrumentation().getTargetContext());
             SQLiteDatabase db = dbHandler.getReadableDatabase();
             Student student = dbAccess.getStudentByNo(db, 1);
+            db.close();
             assertEquals(student.getStudentId(), "S10");
             assertEquals(student.getFirstName(), "John");
             assertEquals(student.getLastName(), "Smith");
@@ -135,6 +142,49 @@ public class DatabaseTests extends ActivityInstrumentationTestCase2<MainActivity
         assertTrue(true);
     }//testSchoolClassTableQuery()
 
+    public void testXEnrollmentTableAdd() {
+        try {
+            setUp(false);
+            DbHandler handler = new DbHandler(getInstrumentation().getTargetContext());
+            int classNo = 1;
+            int studentNo = 1;
+            SQLiteDatabase db = dbHandler.getWritableDatabase();
+            boolean bb = dbAccess.addEnrollment(db, classNo, studentNo);
+            assertTrue(bb);
+        } catch (Exception ex) {
+            assertTrue(false);
+        }
+    }//testEnrollmentTableAdd
+
+    public void testXEnrollmentTableDelete() {
+        try {
+            setUp(false);
+            DbHandler handler = new DbHandler(getInstrumentation().getTargetContext());
+            int classNo = 1;
+            int studentNo = 1;
+            SQLiteDatabase db = dbHandler.getWritableDatabase();
+            boolean bb = dbAccess.deleteEnrollment(db, classNo, studentNo);
+            db.close();
+            assertTrue(bb);
+        } catch (Exception ex) {
+            String x = ex.getMessage();
+            assertTrue(false);
+        }
+    }//testEnrollmentTableDelete
+
+    public void testGetEnrollmentList() {
+        try {
+            setUp(false);
+            DbHandler handler = new DbHandler(getInstrumentation().getTargetContext());
+            SQLiteDatabase db = dbHandler.getReadableDatabase();
+            ArrayList<Enrollment> list = dbAccess.getEnrollmentList(db);
+            db.close();
+            assertTrue(true);
+        } catch (Exception ex) {
+            String x = ex.getMessage();
+            assert(false);
+        }
+    }
     //Note: 'X' in name forces it to run after the previous tests -- alphabetic
     public void testXAttendanceTableAdd() {
         try {
