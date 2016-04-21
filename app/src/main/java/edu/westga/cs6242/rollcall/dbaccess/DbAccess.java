@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import edu.westga.cs6242.rollcall.DbHandler;
 import edu.westga.cs6242.rollcall.model.*;
 /**
  * Created by Wayne on 4/12/2016.
@@ -264,6 +265,7 @@ public class DbAccess {
         return list;
     }//getStudentList()
 
+
     // STUDENT ACCESS METHODS
     //=============================================================================================
     // ATTDNDANCE ACCESS METHODS
@@ -281,14 +283,9 @@ public class DbAccess {
             values.put("studentNo", studentNo);
             values.put("wasPresent", wasPresent);
             int attendanceNo = (int)db.insert(DbHandler.ATTENDANCE_TABLE_NAME, null, values);
-            db.close();
             return attendanceNo;
         } catch (Exception ex) {
             throw ex;
-        }
-        finally {
-            if (db != null)
-                db.close();
         }
     }//addAttendance()
 
@@ -321,5 +318,94 @@ public class DbAccess {
         }
     }//getAttendanceByNo()
 
+    /**
+     * getRollListByClass()
+     *      Gets an AttendanceLine list specified by the classNo.
+     */
+    public ArrayList<AttendanceLine> getRollListByClass(SQLiteDatabase db, int classNo) throws ParseException {
+        ArrayList<AttendanceLine> rollList = new ArrayList<AttendanceLine>();
+        String sql =
+                "SELECT e.classNo, e.studentNo, s.studentFirstName, s.studentLastName " +
+                "FROM Enrollment e " +
+                "JOIN Student s ON s.studentNo = e.studentNo " +
+                "WHERE e.classNo = ?";
+        try {
+            String[] args = {Integer.toString(classNo)};
+            Cursor cursor = db.rawQuery(sql, args);
+            while (cursor.moveToNext()) {
+                classNo = cursor.getInt(0);
+                int studentNo = cursor.getInt(1);
+                String studentFirstName = cursor.getString(2);
+                String studentLastName = cursor.getString(3);
+                String studentName = studentFirstName + " " + studentLastName;
+                AttendanceLine attendanceLine = new AttendanceLine(studentNo, studentName, false);
+                rollList.add(attendanceLine);
+            }
+            return rollList;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }//getRollListClass()
+
+    //Set attendance records from Call Roll listView
+    public boolean setAttendanceRecords(SQLiteDatabase db,
+                                        Date date, int classNo, ArrayList<AttendanceLine> list) {
+        try {
+            for (AttendanceLine al : list) {
+                int key = addAttendance(db, date, classNo, al.getStudentNo(), al.getIsPresent());
+                if (key <= 0)
+                    throw new Exception("Insert Failed");
+            }
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    // ATTENDNACE ACCESS METHODS
+    //==========================================================================================
+    // ENROLLMENT ACCESS METHODS
+
+    //Adds a student enrollment record for a specified classNo and studentNo
+    public boolean addEnrollment(SQLiteDatabase db, int classNo, int studentNo) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put("classNo", Integer.toString(classNo));
+            values.put("studentNo", Integer.toString(studentNo));
+            db.insert(DbHandler.ENROLLMENT_TABLE_NAME, null, values);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }//addEnrollment()
+
+    //Deletes a student enrollment record for a specified classNo and studentNo
+    public boolean deleteEnrollment(SQLiteDatabase db, int classNo, int studentNo) {
+        try {
+            String sql =
+                    "DELETE FROM Enrollment WHERE classNo = ? AND studentNo = ?";
+            //sql = "DELETE FROM " + DbHandler.ENROLLMENT_TABLE_NAME;
+            Object[] args = {classNo, studentNo};
+            db.execSQL(sql, args);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }//deleteEnrollment()
+
+    //
+    public ArrayList<Enrollment> getEnrollmentList(SQLiteDatabase db) {
+        ArrayList<Enrollment> list = new ArrayList<Enrollment>();
+        String sql = "SELECT * FROM Enrollment ";
+        Cursor cursor = db.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            Enrollment enrollment = new Enrollment();
+            enrollment.setSchoolClassNo(cursor.getInt(0));
+            enrollment.setStudentNo(cursor.getInt(1));
+            list.add(enrollment);
+        }
+        //cursor.close();
+        return list;
+    }//getStudentList()
 
 }//class

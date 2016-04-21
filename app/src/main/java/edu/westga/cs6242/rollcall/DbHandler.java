@@ -1,4 +1,4 @@
-package edu.westga.cs6242.rollcall.dbaccess;
+package edu.westga.cs6242.rollcall;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,9 +18,10 @@ import edu.westga.cs6242.rollcall.model.*;
 public class DbHandler extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "RollCall.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
     public static final String SCHOOLCLASS_TABLE_NAME = "SchoolClass";
     public static final String STUDENT_TABLE_NAME = "Student";
+    public static final String ENROLLMENT_TABLE_NAME = "Enrollment";
     public static final String ATTENDANCE_TABLE_NAME = "Attendance";
 
 
@@ -53,11 +54,18 @@ public class DbHandler extends SQLiteOpenHelper {
             db.execSQL(sql);
 
             sql =
+                    "CREATE TABLE " + ENROLLMENT_TABLE_NAME + "( " +
+                            "classNo INTEGER NOT NULL REFERENCES studentClass(classNo), " +
+                            "studentNo INTEGER NOT NULL REFERENCES student(studentNo), " +
+                            "PRIMARY KEY (classNo, studentNo))";
+            db.execSQL(sql);
+
+            sql =
                     "CREATE TABLE " + ATTENDANCE_TABLE_NAME + "( " +
                             "attendanceNo INTEGER PRIMARY KEY AUTOINCREMENT, " +
                             "attendanceDate VARCHAR(20) NOT NULL, " +
-                            "studentNo INTEGER NOT NULL REFERENCES student(studentNo), " +
                             "classNo INTEGER NOT NULL REFERENCES studentClass(classNo), " +
+                            "studentNo INTEGER NOT NULL REFERENCES student(studentNo), " +
                             "wasPresent BOOLEAN NOT NULL)";
 
             db.execSQL(sql);
@@ -72,6 +80,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + SCHOOLCLASS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + STUDENT_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ENROLLMENT_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ATTENDANCE_TABLE_NAME);
         onCreate(db);
     }//onUpdate
