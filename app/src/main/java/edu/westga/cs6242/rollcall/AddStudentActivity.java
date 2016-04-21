@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import edu.westga.cs6242.rollcall.controller.Controller;
 
@@ -51,14 +52,14 @@ public class AddStudentActivity extends AppCompatActivity {
         //call dbaccess to add student
         int studentNo = controller.addNewStudent(studentId, studentFirstName, studentLastName);
         if (studentNo <= 0) {
-            btnAdd.setError("Error. Student could not be added.");
+            Toast.makeText(this, (String) "An unexpected error has occured!", Toast.LENGTH_SHORT).show();
             return;
         } else {
             txtStudentId.setText("");
             txtStudentFirstName.setText("");
             txtStudentLastName.setText("");
         }
-
+        Toast.makeText(this, (String) "New Student has been Added!", Toast.LENGTH_SHORT).show();
     }//btnAdd_onClick
 
 }

@@ -59,7 +59,7 @@ public class EditStudentActivity extends AppCompatActivity implements AdapterVie
         //setup student selector
         this.spnStudent.setOnItemSelectedListener(this);
         //this.adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, backingList);
-        this.adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, backingList);
+        this.adapter = new ArrayAdapter<String>(this, R.layout.spinner1, backingList);
         this.spnStudent.setAdapter(adapter);
 
     }//initControls()
@@ -123,9 +123,14 @@ public class EditStudentActivity extends AppCompatActivity implements AdapterVie
                 txtStudentId.setError("Student Id must be Unique");
                 return;
             }
-            controller.updateStudent(studentNo, studentId, studentFirstName, studentLastName);
+            boolean done = controller.updateStudent(studentNo, studentId, studentFirstName, studentLastName);
+            if (!done) {
+                Toast.makeText(this, (String) "An unexpected error has occured!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             initControls();
             loadStudentControls();
+            Toast.makeText(this, (String) "Student has been Updated!", Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
             Toast.makeText(this, "Sorry an unexpected error occured.",
                     Toast.LENGTH_SHORT).show();
@@ -140,9 +145,14 @@ public class EditStudentActivity extends AppCompatActivity implements AdapterVie
                 return;
             }
             int studentNo = this.student.getStudentNo();
-            controller.deleteStudent(studentNo);
+            boolean done = controller.deleteStudent(studentNo);
+            if (!done) {
+                Toast.makeText(this, (String) "An unexpected error has occured!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             initControls();
             loadStudentControls();
+            Toast.makeText(this, (String) "Student has been deleted!", Toast.LENGTH_SHORT).show();
         }
         catch (Exception ex) {
             Toast.makeText(this, "Sorry an unexpected error occured.",

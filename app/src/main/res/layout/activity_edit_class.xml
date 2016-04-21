@@ -129,7 +129,7 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:text="@string/update_class"
-            android:id="@+id/btnSavw"
+            android:id="@+id/btnUpdate"
             android:textSize="12dp"
             android:layout_marginTop="0dp"
             android:layout_below="@+id/linearLayout2"

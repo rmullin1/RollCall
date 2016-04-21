@@ -26,7 +26,8 @@
         <activity android:name=".AddClassActivity" />
         <activity android:name=".EditClassActivity" />
         <activity android:name=".AddStudentActivity" />
-        <activity android:name=".EditStudentActivity"></activity>
+        <activity android:name=".EditStudentActivity" />
+        <activity android:name=".EnrollStudentActivity"></activity>
     </application>
 
 </manifest>

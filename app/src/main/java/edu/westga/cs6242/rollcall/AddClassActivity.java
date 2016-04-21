@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import edu.westga.cs6242.rollcall.controller.Controller;
 
@@ -46,12 +47,13 @@ public class AddClassActivity extends AppCompatActivity {
         //call dbaccess to add class
         int classNo = controller.addNewClass(classId, className);
         if (classNo <= 0) {
-            btnAdd.setError("Error. Class could not be added.");
+            Toast.makeText(this, (String) "An unexpected error has occured!", Toast.LENGTH_SHORT).show();
             return;
         } else {
             txtClassId.setText("");
             txtClassName.setText("");
         }
+        Toast.makeText(this, (String) "New Class has been Added!", Toast.LENGTH_SHORT).show();
 
     }//btnAdd_onClick
 

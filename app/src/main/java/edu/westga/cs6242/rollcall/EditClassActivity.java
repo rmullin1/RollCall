@@ -59,7 +59,7 @@ public class EditClassActivity extends AppCompatActivity implements AdapterView.
         //setup class selector
         this.spnClass.setOnItemSelectedListener(this);
         //this.adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, backingList);
-        this.adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, backingList);
+        this.adapter = new ArrayAdapter<String>(this, R.layout.spinner1, backingList);
         this.spnClass.setAdapter(adapter);
 
     }//initControls()
@@ -115,11 +115,17 @@ public class EditClassActivity extends AppCompatActivity implements AdapterView.
                 txtClassId.setError("Class Id must be Unique");
                 return;
             }
-            controller.updateClass(classNo, classId, className);
+            boolean done = controller.updateClass(classNo, classId, className);
+            if (!done) {
+                Toast.makeText(this, (String) "An unexpected error has occured!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             initControls();
             loadClassControls();
+            Toast.makeText(this, (String) "Class has been Updated!", Toast.LENGTH_SHORT).show();
+
         } catch (Exception ex) {
-            Toast.makeText(this, "Sorry an unexpected error occured.",
+            Toast.makeText(this, "Sorry an unexpected error occured!",
                     Toast.LENGTH_SHORT).show();
         }
     }//btnUpdate_onClick
@@ -132,9 +138,14 @@ public class EditClassActivity extends AppCompatActivity implements AdapterView.
                 return;
             }
             int classNo = this.schoolClass.getClassNo();
-            controller.deleteClass(classNo);
+            boolean done = controller.deleteClass(classNo);
+            if (!done) {
+                Toast.makeText(this, (String) "An unexpected error has occured!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             initControls();
             loadClassControls();
+            Toast.makeText(this, (String) "Class has been Deleted!", Toast.LENGTH_SHORT).show();
         }
         catch (Exception ex) {
             Toast.makeText(this, "Sorry an unexpected error occured.",

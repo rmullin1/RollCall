@@ -8,8 +8,17 @@ public class AttendanceLine {
     private String studentName;
     private boolean isPresent;
 
+    public AttendanceLine() {
+    }
+
     public AttendanceLine(String name) {
         this.studentName = name;
+    }
+
+    public AttendanceLine(int studentNo, String name, boolean isPresent ) {
+        this.studentNo = studentNo;
+        this.studentName = name;
+        this.isPresent = isPresent;
     }
 
     public int getStudentNo() {

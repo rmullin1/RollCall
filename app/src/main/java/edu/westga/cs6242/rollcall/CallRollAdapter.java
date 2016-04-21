@@ -56,7 +56,7 @@ public class CallRollAdapter extends ArrayAdapter<AttendanceLine> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.checkbox.setTag(position); // This line is important.
+        viewHolder.checkbox.setTag(position);
 
         viewHolder.text.setText(list.get(position).getStudentName());
         viewHolder.checkbox.setChecked(list.get(position).getIsPresent());
