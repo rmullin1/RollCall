@@ -30,7 +30,7 @@ public class EnrollStudentActivityTest extends ActivityInstrumentationTestCase2<
         assertNotNull(btnEnroll);
         TestUtilities.clickButton(activity, btnEnroll);
         instrumentation.waitForIdleSync();
-        assertTrue(spnClass.getSelectedItemPosition() == 0);
+        assertTrue(spnStudent.getSelectedItemPosition() == 0);
     }
 
 }

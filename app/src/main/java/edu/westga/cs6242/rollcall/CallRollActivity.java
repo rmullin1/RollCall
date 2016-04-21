@@ -25,7 +25,7 @@ import edu.westga.cs6242.rollcall.model.AttendanceLine;
 import edu.westga.cs6242.rollcall.model.SchoolClass;
 
 public class CallRollActivity extends AppCompatActivity
-        implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
+        implements AdapterView.OnItemSelectedListener, ListView.OnItemClickListener {
 
     private ArrayList<String> classBackingList;
     private ArrayList<SchoolClass> schoolClassList;
@@ -128,7 +128,7 @@ public class CallRollActivity extends AppCompatActivity
     }
 
     //handler for the Attendance isPresent checkbox
-    @Override
+    //@Override
     public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
         TextView label = (TextView)view.getTag(R.id.lblName);
         CheckBox checkbox = (CheckBox)view.getTag(R.id.ispresent);

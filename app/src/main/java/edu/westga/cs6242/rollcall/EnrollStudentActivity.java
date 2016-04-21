@@ -126,8 +126,8 @@ public class EnrollStudentActivity extends AppCompatActivity implements AdapterV
             Toast.makeText(this, (String) "An unexpected error has occured!", Toast.LENGTH_SHORT).show();
             return;
         }
-        spnClass.setSelection(0);
-        Toast.makeText(this, (String) "Student is Enrolled!", Toast.LENGTH_SHORT).show();
+        spnStudent.setSelection(0);
+        Toast.makeText(this, (String) "Student has been Enrolled!", Toast.LENGTH_SHORT).show();
     }
 
     public void btnUnenroll_onClick(View view) {
