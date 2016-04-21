@@ -6,10 +6,6 @@ import static org.junit.Assert.*;
 import edu.westga.cs6242.rollcall.model.Student;
 
 /**
- * Unit Tests for the Attendance class
- */
-
-/**
  * Unit Tests ofr the SchoolClass class
  */
 
