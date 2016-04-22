@@ -37,5 +37,6 @@
     <string name="save">SAVE</string>
 
     <string name="load_test_data">Load Demo Data</string>
+    <string name="show_stats">Show Statistics</string>
 
 </resources>

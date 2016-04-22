@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edu.westga.cs6242.rollcall.EnrollStudentActivity">
+    tools:context="edu.westga.cs6242.rollcall.EnrollStudentActivity"
+    android:background="#FCDBD5">
 
     <TextView
         android:layout_width="match_parent"
@@ -17,7 +18,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
 
     <LinearLayout
@@ -35,16 +37,16 @@
             android:text="@string/select_class"
             android:id="@+id/lblSelect"
             android:foregroundTintMode="add"
-            android:layout_below="@+id/linearLayout1"
+            android:layout_below="@+id/linearLayout4"
             android:layout_alignLeft="@+id/linearLayout"
-            android:layout_alignStart="@+id/linearLayout3"
+            android:layout_alignStart="@+id/linearLayout4"
             android:layout_marginTop="0dp" />
 
         <Spinner
             android:layout_width="140dp"
             android:layout_height="30dp"
             android:id="@+id/spnClass"
-            android:layout_below="@+id/linearLayout3"
+            android:layout_below="@+id/linearLayout4"
             android:layout_centerHorizontal="true"
             android:spinnerMode="dropdown"
             android:prompt="@string/new_class_id"
@@ -88,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
-        android:id="@+id/linearLayout3"
+        android:id="@+id/linearLayout4"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_alignLeft="@+id/linearLayout1">
@@ -106,10 +108,10 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/enroll_student"
+            android:text="@string/unenroll_student"
             android:id="@+id/btnUnenroll"
             android:textSize="12dp"
-            android:onClick="btnEnroll_onClick"
+            android:onClick="btnUnenroll_onClick"
             android:layout_marginLeft="50dp" />
 
     </LinearLayout>

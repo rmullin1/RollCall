@@ -33,4 +33,22 @@ public class EnrollStudentActivityTest extends ActivityInstrumentationTestCase2<
         assertTrue(spnStudent.getSelectedItemPosition() == 0);
     }
 
+    public void testUnenrollStudent() {
+        Instrumentation instrumentation = getInstrumentation();
+        Activity activity = this.getActivity();
+        Spinner spnClass = (Spinner)activity.findViewById(R.id.spnClass);
+        assertNotNull(spnClass);
+        Spinner spnStudent = (Spinner)activity.findViewById(R.id.spnStudent);
+        assertNotNull(spnStudent);
+        TestUtilities.setSpinnerSelection(activity, spnClass, 1);
+        instrumentation.waitForIdleSync();
+        TestUtilities.setSpinnerSelection(activity, spnStudent, 1);
+        instrumentation.waitForIdleSync();
+        Button btnUnenroll = (Button)activity.findViewById(R.id.btnUnenroll);
+        assertNotNull(btnUnenroll);
+        TestUtilities.clickButton(activity, btnUnenroll);
+        instrumentation.waitForIdleSync();
+        assertTrue(spnStudent.getSelectedItemPosition() == 0);
+    }
+
 }
