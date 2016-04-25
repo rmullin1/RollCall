@@ -24,11 +24,11 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:id="@+id/linearLayout4"
+        android:id="@+id/linearLayout1"
         android:gravity="center_vertical"
         android:layout_below="@+id/lblHeader">
 
@@ -40,7 +40,7 @@
             android:foregroundTintMode="add" />
 
         <EditText
-            android:layout_width="140dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtStudentId"
             android:hint="@string/new_student_id_hint"
@@ -55,14 +55,12 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout4"
-        android:layout_alignLeft="@+id/linearLayout4"
-        android:layout_alignStart="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout1"
         android:gravity="center_vertical"
-        android:id="@+id/linearLayout4"
-        android:layout_alignRight="@+id/linearLayout4">
+        android:id="@+id/linearLayout2"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:layout_width="160dp"
@@ -72,7 +70,7 @@
             android:foregroundTintMode="add" />
 
         <EditText
-            android:layout_width="140dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtStudentFirstName"
             android:hint="@string/new_student_first_name_hint"
@@ -83,11 +81,11 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:id="@+id/linearLayout4"
-        android:layout_below="@+id/linearLayout4"
+        android:id="@+id/linearLayout3"
+        android:layout_below="@+id/linearLayout2"
         android:layout_centerHorizontal="true">
 
         <TextView
@@ -98,7 +96,7 @@
             android:foregroundTintMode="add" />
 
         <EditText
-            android:layout_width="140dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtStudentLastName"
             android:hint="@string/new_student_last_name_hint"
@@ -117,7 +115,7 @@
         android:textSize="12dp"
         android:layout_marginTop="20dp"
         android:onClick="btnAdd_onClick"
-        android:layout_below="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout3"
         android:layout_centerHorizontal="true" />
 
 

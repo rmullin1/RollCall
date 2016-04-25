@@ -23,29 +23,30 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout0"
+        android:id="@+id/linearLayout00"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentLeft="false"
         android:layout_below="@+id/lblHeader"
-        android:layout_marginTop="20dp">
+        android:layout_centerHorizontal="true">
 
         <TextView
-            android:layout_width="160dp"
+            android:layout_width="164dp"
             android:layout_height="30dp"
             android:text="@string/select_student"
             android:id="@+id/lblSelect"
             android:foregroundTintMode="add"
-            android:layout_below="@+id/linearLayout4"
-            android:layout_alignLeft="@+id/linearLayout4"
-            android:layout_alignStart="@+id/linearLayout4"
+            android:layout_below="@+id/linearLayout1"
+            android:layout_alignLeft="@+id/linearLayout1"
+            android:layout_alignStart="@+id/linearLayout1"
             android:layout_marginTop="0dp" />
 
         <Spinner
-            android:layout_width="140dp"
+            android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:id="@+id/spnStudent"
-            android:layout_below="@+id/linearLayout4"
+            android:layout_below="@+id/linearLayout1"
             android:layout_centerHorizontal="true"
             android:spinnerMode="dropdown"
             android:prompt="@string/new_student_id"
@@ -55,14 +56,14 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout4"
+        android:id="@+id/linearLayout01"
         android:gravity="center_vertical"
-        android:layout_below="@+id/linearLayout0"
-        android:layout_alignLeft="@+id/linearLayout0"
-        android:layout_toRightOf="@+id/linearLayout0">
+        android:layout_below="@+id/linearLayout00"
+        android:layout_alignLeft="@+id/linearLayout00"
+        android:layout_alignParentLeft="false"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:layout_width="160dp"
@@ -72,7 +73,7 @@
             android:foregroundTintMode="add" />
 
         <EditText
-            android:layout_width="140dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtStudentId"
             android:hint="@string/new_student_id_hint"
@@ -87,14 +88,14 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout4"
-        android:layout_alignLeft="@+id/linearLayout4"
-        android:layout_alignStart="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout01"
         android:gravity="center_vertical"
-        android:id="@+id/linearLayout4"
-        android:layout_toRightOf="@+id/linearLayout4">
+        android:id="@+id/linearLayout02"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="false">
 
         <TextView
             android:layout_width="160dp"
@@ -104,7 +105,7 @@
             android:foregroundTintMode="add" />
 
         <EditText
-            android:layout_width="140dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtStudentFirstName"
             android:hint="@string/new_student_first_name_hint"
@@ -116,14 +117,14 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout4"
-        android:layout_alignLeft="@+id/linearLayout4"
-        android:layout_alignStart="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout02"
         android:gravity="center_vertical"
-        android:id="@+id/linearLayout4"
-        android:layout_toRightOf="@+id/linearLayout4">
+        android:id="@+id/linearLayout03"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="false">
 
         <TextView
             android:layout_width="160dp"
@@ -133,7 +134,7 @@
             android:foregroundTintMode="add" />
 
         <EditText
-            android:layout_width="140dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtStudentLastName"
             android:hint="@string/new_student_last_name_hint"
@@ -145,15 +146,13 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout4"
-        android:id="@+id/linearLayout4"
-        android:layout_alignStart="@id/linearLayout4"
-        android:layout_alignLeft="@+id/linearLayout4"
-        android:layout_alignRight="@+id/linearLayout4"
-        android:layout_alignEnd="@+id/linearLayout4"
-        android:layout_marginTop="20dp">
+        android:layout_below="@+id/linearLayout03"
+        android:id="@+id/linearLayout04"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="false">
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -163,7 +162,7 @@
             android:id="@+id/btnUpdate"
             android:textSize="12dp"
             android:layout_marginTop="0dp"
-            android:layout_below="@+id/linearLayout4"
+            android:layout_below="@+id/linearLayout1"
             android:layout_centerHorizontal="true"
             android:onClick="btnUpdate_onClick" />
 
@@ -175,8 +174,8 @@
             android:id="@+id/btnDelete"
             android:textSize="12dp"
             android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/linearLayout4"
-            android:layout_alignStart="@+id/linearLayout4"
+            android:layout_alignLeft="@+id/linearLayout1"
+            android:layout_alignStart="@+id/linearLayout1"
             android:layout_marginLeft="40dp"
             android:onClick="btnDelete_onClick" />
     </LinearLayout>
