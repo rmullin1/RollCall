@@ -41,7 +41,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout4">
+            android:id="@+id/linearLayout01">
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -58,9 +58,9 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:text="@string/show_stats"
+                android:text="@string/show_statistics"
                 android:id="@+id/btnShowStats"
-                android:onClick="btnEnrollStudent_onClick"
+                android:onClick="btnShowStatistics_onClick"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/buttonPanel"
                 android:layout_toEndOf="@+id/buttonPanel" />
@@ -70,7 +70,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout4">
+            android:id="@+id/linearLayout02">
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -100,7 +100,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout4">
+            android:id="@+id/linearLayout03">
 
             <Button
                 style="?android:attr/buttonStyleSmall"

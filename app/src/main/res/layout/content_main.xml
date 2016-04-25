@@ -13,13 +13,23 @@
     tools:showIn="@layout/activity_main"
     android:background="#FFCC99">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome to RollCall"
+        android:id="@+id/lblHeader"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/buttonPanel"
-        android:layout_marginBottom="110dp"
         android:layout_alignParentTop="true"
         android:background="@drawable/control_border2"
         android:layout_marginTop="70dp"
@@ -49,9 +59,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="@string/show_stats"
+            android:text="@string/show_statistics"
             android:id="@+id/btnShowStats"
-            android:onClick="btnShowStats_onClick"
+            android:onClick="btnShowStatistics_onClick"
             android:layout_below="@+id/btnEditClass"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -107,11 +117,10 @@
             android:text="Test"
             android:id="@+id/btnTest"
             android:onClick="btnTest_onClick"
-            android:layout_marginBottom="65dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:layout_above="@+id/btnLoadData"
+            android:layout_centerHorizontal="true" />
+
     </LinearLayout>
 
     <Button
@@ -126,15 +135,5 @@
         android:backgroundTint="#FFE0E0"
         android:layout_alignParentBottom="true" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Welcome to RollCall"
-        android:id="@+id/lblHeader"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        android:textStyle="bold" />
+
 </RelativeLayout>

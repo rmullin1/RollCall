@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:id="@+id/linearLayout0"
@@ -37,16 +37,16 @@
             android:text="@string/select_class"
             android:id="@+id/lblSelect"
             android:foregroundTintMode="add"
-            android:layout_below="@+id/linearLayout4"
+            android:layout_below="@+id/linearLayout1"
             android:layout_alignLeft="@+id/linearLayout"
-            android:layout_alignStart="@+id/linearLayout4"
+            android:layout_alignStart="@+id/linearLayout1"
             android:layout_marginTop="0dp" />
 
         <Spinner
-            android:layout_width="140dp"
+            android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:id="@+id/spnClass"
-            android:layout_below="@+id/linearLayout4"
+            android:layout_below="@+id/linearLayout1"
             android:layout_centerHorizontal="true"
             android:spinnerMode="dropdown"
             android:prompt="@string/new_class_id"
@@ -57,7 +57,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:id="@+id/linearLayout1"
@@ -75,7 +75,7 @@
             android:layout_marginTop="0dp" />
 
         <Spinner
-            android:layout_width="140dp"
+            android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:id="@+id/spnStudent"
             android:layout_centerHorizontal="true"
@@ -90,10 +90,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
-        android:id="@+id/linearLayout4"
+        android:id="@+id/linearLayout2"
         android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignLeft="@+id/linearLayout1">
+        android:layout_centerHorizontal="true">
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -115,9 +114,5 @@
             android:layout_marginLeft="50dp" />
 
     </LinearLayout>
-
-
-
-
 
 </RelativeLayout>

@@ -1,7 +1,9 @@
 package edu.westga.cs6242.rollcall.controller;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -301,6 +303,20 @@ public class Controller {
         }
     }//setAttendanceRecords()
 
+    public ArrayList<Attendance> getAttendanceListFiltered(int classNo, int studentNo) {
+        SQLiteDatabase db = null;
+        try {
+            db = dbHandler.getReadableDatabase();
+            return dbAccess.getAttendanceListFiltered(db, classNo, studentNo);
+        } catch (Exception ex) {
+            String err = ex.getMessage();
+            return null;
+        } finally {
+            if (db != null)
+                db.close();
+        }
+    }
+
     // Enrollment Access Methods
     //=============================================================================================
     // Attendance Access Methods
@@ -309,8 +325,7 @@ public class Controller {
         SQLiteDatabase db = null;
         try {
             db = dbHandler.getWritableDatabase();
-            boolean bb = dbAccess.deleteEnrollment(db, classNo, studentNo);
-            return 1;
+            return dbAccess.addAttendance(db, date, classNo, studentNo, wasPresent);
         } catch (Exception ex) {
             return -1;
         } finally {
@@ -319,43 +334,136 @@ public class Controller {
         }
     }//addNewAttendance()
 
+    public ArrayList<Integer> doStatistics(int classNo, int studentNo) throws Exception {
+        ArrayList<Integer> attendanceCounts = new ArrayList<Integer>();
+        SQLiteDatabase db = dbHandler.getReadableDatabase();
+        try {
+            db = dbHandler.getReadableDatabase();
+            attendanceCounts = dbAccess.getAttendanceCountsFiltered(db, classNo, studentNo);
+            return attendanceCounts;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }//doStatistics()
 
+
+    //=============================================================================================
     //LOAD TEST DATA for testing and demo
     private void loadTestData() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int key;
-        //create three classes
-        key = addNewClass("C001", "Class 1");
-        key = addNewClass("C002", "Class 2");
-        key = addNewClass("C003", "Class 3");
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            int key;
+            //create three classes
+            key = addNewClass("C001", "Class 1");
+            key = addNewClass("C002", "Class 2");
+            key = addNewClass("C003", "Class 3");
 
-        //create 10 students
-        key = addNewStudent("S001", "Abby", "Adams");
-        key = addNewStudent("S002", "Betty", "Baker");
-        key = addNewStudent("S003", "Charles", "Cline");
-        key = addNewStudent("S004", "Dan", "Davis");
-        key = addNewStudent("S005", "Ed", "Edwards");
-        key = addNewStudent("S006", "Fran", "Frank");
-        key = addNewStudent("S007", "Gail", "Gaines");
-        key = addNewStudent("S008", "Hank", "Howard");
-        key = addNewStudent("S009", "Ida", "Ives");
-        key = addNewStudent("S010", "Jan", "James");
+            //create 10 students
+            key = addNewStudent("S001", "Abby", "Adams");
+            key = addNewStudent("S002", "Betty", "Baker");
+            key = addNewStudent("S003", "Charles", "Cline");
+            key = addNewStudent("S004", "Dan", "Davis");
+            key = addNewStudent("S005", "Ed", "Edwards");
+            key = addNewStudent("S006", "Fran", "Frank");
+            key = addNewStudent("S007", "Gail", "Gaines");
+            key = addNewStudent("S008", "Hank", "Howard");
+            key = addNewStudent("S009", "Ida", "Ives");
+            key = addNewStudent("S010", "Jan", "James");
 
-        //add enrollments
-        key = addNewEnrollment(1,1);
-        key = addNewEnrollment(1,2);
-        key = addNewEnrollment(1,3);
-        key = addNewEnrollment(1,4);
-        key = addNewEnrollment(1,5);
-        key = addNewEnrollment(2,4);
-        key = addNewEnrollment(2,5);
-        key = addNewEnrollment(2,6);
-        key = addNewEnrollment(2,7);
-        key = addNewEnrollment(2,8);
-        key = addNewEnrollment(3,7);
-        key = addNewEnrollment(3,8);
-        key = addNewEnrollment(3,9);
-        key = addNewEnrollment(3,10);
+            //add enrollments
+            key = addNewEnrollment(1, 1);
+            key = addNewEnrollment(1, 2);
+            key = addNewEnrollment(1, 3);
+            key = addNewEnrollment(1, 4);
+            key = addNewEnrollment(1, 5);
+            key = addNewEnrollment(2, 4);
+            key = addNewEnrollment(2, 5);
+            key = addNewEnrollment(2, 6);
+            key = addNewEnrollment(2, 7);
+            key = addNewEnrollment(2, 8);
+            key = addNewEnrollment(3, 7);
+            key = addNewEnrollment(3, 8);
+            key = addNewEnrollment(3, 9);
+            key = addNewEnrollment(3, 10);
+
+            //add attendances
+            Date date;
+            date = DbAccess.StringToDate("2016-04-18 15:00");
+            key = addNewAttendance(date, 1, 1, true);
+            key = addNewAttendance(date, 1, 2, true);
+            key = addNewAttendance(date, 1, 3, false);
+            key = addNewAttendance(date, 1, 4, true);
+            key = addNewAttendance(date, 1, 5, true);
+
+            key = addNewAttendance(date, 2, 4, true);
+            key = addNewAttendance(date, 2, 5, true);
+            key = addNewAttendance(date, 2, 6, true);
+            key = addNewAttendance(date, 2, 7, true);
+            key = addNewAttendance(date, 2, 8, true);
+
+            key = addNewAttendance(date, 3, 7, true);
+            key = addNewAttendance(date, 3, 8, true);
+            key = addNewAttendance(date, 3, 9, true);
+            key = addNewAttendance(date, 3, 10, true);
+
+
+            date = DbAccess.StringToDate("2016-04-19 15:00");
+            key = addNewAttendance(date, 1, 1, true);
+            key = addNewAttendance(date, 1, 2, true);
+            key = addNewAttendance(date, 1, 3, true);
+            key = addNewAttendance(date, 1, 4, false);
+            key = addNewAttendance(date, 1, 5, true);
+
+            key = addNewAttendance(date, 2, 4, true);
+            key = addNewAttendance(date, 2, 5, false);
+            key = addNewAttendance(date, 2, 6, true);
+            key = addNewAttendance(date, 2, 7, true);
+            key = addNewAttendance(date, 2, 8, true);
+
+            key = addNewAttendance(date, 3, 7, true);
+            key = addNewAttendance(date, 3, 8, true);
+            key = addNewAttendance(date, 3, 9, true);
+            key = addNewAttendance(date, 3, 10, true);
+
+            date = DbAccess.StringToDate("2016-04-20 15:00");
+            key = addNewAttendance(date, 1, 1, true);
+            key = addNewAttendance(date, 1, 2, true);
+            key = addNewAttendance(date, 1, 3, false);
+            key = addNewAttendance(date, 1, 4, true);
+            key = addNewAttendance(date, 1, 5, true);
+
+            key = addNewAttendance(date, 2, 4, true);
+            key = addNewAttendance(date, 2, 5, true);
+            key = addNewAttendance(date, 2, 6, true);
+            key = addNewAttendance(date, 2, 7, true);
+            key = addNewAttendance(date, 2, 8, false);
+
+            key = addNewAttendance(date, 3, 7, true);
+            key = addNewAttendance(date, 3, 8, true);
+            key = addNewAttendance(date, 3, 9, true);
+            key = addNewAttendance(date, 3, 10, true);
+
+            date = DbAccess.StringToDate("2016-04-21 15:00");
+            key = addNewAttendance(date, 1, 1, true);
+            key = addNewAttendance(date, 1, 2, true);
+            key = addNewAttendance(date, 1, 3, true);
+            key = addNewAttendance(date, 1, 4, true);
+            key = addNewAttendance(date, 1, 5, false);
+
+            key = addNewAttendance(date, 2, 4, true);
+            key = addNewAttendance(date, 2, 5, true);
+            key = addNewAttendance(date, 2, 6, true);
+            key = addNewAttendance(date, 2, 7, true);
+            key = addNewAttendance(date, 2, 8, true);
+
+            key = addNewAttendance(date, 3, 7, false);
+            key = addNewAttendance(date, 3, 8, true);
+            key = addNewAttendance(date, 3, 9, true);
+            key = addNewAttendance(date, 3, 10, true);
+
+        } catch (Exception ex) {
+            String err = ex.getMessage();
+        }
 
     }//loadTestData()
 

@@ -37,6 +37,15 @@
     <string name="save">SAVE</string>
 
     <string name="load_test_data">Load Demo Data</string>
-    <string name="show_stats">Show Statistics</string>
+
+    <string name="show_statistics">Show Statistics</string>
+    <string name="show">Show</string>
+    <string name="number_classes">Number Of Classes</string>
+    <string name="number_students">Number Of Students</string>
+    <string name="number_dates">Number Of Dates</string>
+    <string name="number_filled_seats">Number Filled Seats</string>
+    <string name="number_total_seats">Total Number Seats</string>
+    <string name="average_attendance">Ave Attendance</string>
+
 
 </resources>

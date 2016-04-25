@@ -16,22 +16,32 @@ import edu.westga.cs6242.rollcall.model.*;
  */
 public class DbAccess {
 
+    private String err;
+
     /**
      * DateToString()
      *      Converts a Date value to a string for SqlLite database
      */
-    public static String DateToString(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        return dateFormat.format(date);
+    public static String DateToString(Date date) throws Exception {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            return dateFormat.format(date);
+        } catch (Exception ex) {
+            throw new Exception("DateToString(): Invalid Date Value");
+        }
     }
 
     /**
      * StringToDate()
      *      Converts a String value to a Date for SqlLite database
      */
-    public static Date StringToDate(String dateString) throws ParseException {
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        return dateFormat.parse(dateString);
+    public static Date StringToDate(String dateString) throws Exception {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            return dateFormat.parse(dateString);
+        } catch (Exception ex) {
+            throw new Exception("StringToDate(): Invalid Date String");
+        }
     }
 
     //=============================================================================================
@@ -282,10 +292,9 @@ public class DbAccess {
             values.put("classNo", classNo);
             values.put("studentNo", studentNo);
             values.put("wasPresent", wasPresent);
-            int attendanceNo = (int)db.insert(DbHandler.ATTENDANCE_TABLE_NAME, null, values);
-            return attendanceNo;
+            return (int)db.insert(DbHandler.ATTENDANCE_TABLE_NAME, null, values);
         } catch (Exception ex) {
-            throw ex;
+            return -1;
         }
     }//addAttendance()
 
@@ -314,7 +323,7 @@ public class DbAccess {
             }
             return attendance;
         } catch (Exception ex) {
-            throw ex;
+            return null;
         }
     }//getAttendanceByNo()
 
@@ -359,6 +368,95 @@ public class DbAccess {
             return true;
         } catch (Exception ex) {
             return false;
+        }
+    }//setAttendanceRecords()
+
+    //get attendance records filtered by optional classNo and studentNo
+    //use 0 for an argument to match any value.
+    public ArrayList<Attendance> getAttendanceListFiltered(SQLiteDatabase db, int classNo, int studentNo)
+                                throws ParseException {
+        ArrayList<Attendance> attendanceList = new ArrayList<Attendance>();
+        String sql = String.format(
+                "SELECT * " +
+                "FROM Attendance a " +
+                "JOIN SchoolClass sc ON sc.classNo = a.classNo " +
+                "JOIN Student s ON s.studentNo = a.studentNo " +
+                "WHERE (%d = 0 OR a.classNo = %d) AND (%d = 0 OR a.studentNo = %d) " +
+                "ORDER BY a.attendanceDate, a.classNo, a.studentNo", classNo, classNo, studentNo, studentNo);
+
+        try {
+//            String[] args = {Integer.toString(classNo), Integer.toString(classNo),
+//                             Integer.toString(studentNo), Integer.toString(studentNo)};
+            Cursor cursor = db.rawQuery(sql, null);
+            while (cursor.moveToNext()) {
+                Attendance attendance = new Attendance();
+                SchoolClass schoolClass = new SchoolClass();
+                Student student = new Student();
+
+                schoolClass.setClassNo(cursor.getInt(5));
+                schoolClass.setClassId(cursor.getString(6));
+                schoolClass.setClassName(cursor.getString(7));
+
+                student.setStudentNo(cursor.getInt(8));
+                student.setStudentId(cursor.getString(9));
+                student.setFirstName(cursor.getString(10));
+                student.setLastName(cursor.getString(11));
+
+                attendance.setAttendanceNo(cursor.getInt(0));
+                attendance.setAttendanceDate(this.StringToDate(cursor.getString(1)));
+                attendance.setSchoolClass(schoolClass);
+                attendance.setStudent(student);
+                attendance.setWasPresent(cursor.getInt(4) != 0);
+
+                attendanceList.add(attendance);
+            }
+            return attendanceList;
+        } catch (Exception ex) {
+            err = ex.getMessage();
+            return attendanceList;
+        }
+    }//getAttendanceListFiltered()
+
+    public ArrayList<Integer> getAttendanceCountsFiltered(SQLiteDatabase db, int classNo, int studentNo) {
+        ArrayList<Integer> attendanceCounts = new ArrayList<Integer>();
+        String sql1 = String.format(
+                "SELECT  COUNT (DISTINCT a.AttendanceDate) AS DateCount,  " +
+                        "COUNT (DISTINCT a.ClassNo) AS ClassCount, " +
+                        "COUNT (DISTINCT a.StudentNo) AS StudentCount, " +
+                        "COUNT (DISTINCT a.AttendanceNo) AS AttendanceCount " +
+                        "FROM Attendance a " +
+                        "WHERE (%d = 0 OR a.classNo = %d) AND (%d = 0 OR a.studentNo = %d) ",
+                classNo, classNo, studentNo, studentNo);
+
+        String sql2 = String.format(
+                "SELECT COUNT(*) AS TotalCount " +
+                        "FROM Attendance a " +
+                        "WHERE (%d = 0 OR a.classNo = %d) AND (%d = 0 OR a.studentNo = %d) AND a.wasPresent = 1 ",
+                classNo, classNo, studentNo, studentNo);
+        try {
+
+            //get the Dates, Classes, Students, and Total Attendance counts
+            Cursor cursor = db.rawQuery(sql1, null);
+            if (cursor.moveToFirst()) {
+                attendanceCounts.add(cursor.getInt(0));
+                attendanceCounts.add(cursor.getInt(1));
+                attendanceCounts.add(cursor.getInt(2));
+                attendanceCounts.add(cursor.getInt(3));
+            }
+            cursor.close();
+
+            //get the Presents count and average attendance
+            cursor = db.rawQuery(sql2, null);
+            if (cursor.moveToFirst()) {
+                attendanceCounts.add(cursor.getInt(0));
+                int average = (100 * attendanceCounts.get(4))/attendanceCounts.get(3);
+                attendanceCounts.add(average);
+            }
+
+            return attendanceCounts;
+        } catch (Exception ex) {
+            err = ex.getMessage();
+            return attendanceCounts;
         }
     }
 
@@ -406,6 +504,6 @@ public class DbAccess {
         }
         //cursor.close();
         return list;
-    }//getStudentList()
+    }//getEnrollmentList()
 
 }//class

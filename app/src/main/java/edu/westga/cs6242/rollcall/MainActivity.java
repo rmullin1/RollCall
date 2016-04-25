@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import edu.westga.cs6242.rollcall.controller.Controller;
+import edu.westga.cs6242.rollcall.model.Attendance;
 import edu.westga.cs6242.rollcall.model.Enrollment;
 import edu.westga.cs6242.rollcall.model.SchoolClass;
 
@@ -80,6 +81,10 @@ public class MainActivity extends AppCompatActivity  {
         startActivity(intent);
     }//btnEditStudent_onClick
 
+    public void btnShowStatistics_onClick(View view) {
+        Intent intent = new Intent(this, ShowStatisticsActivity.class);
+        startActivity(intent);
+    }//btnShowStatistics_onClick
 
     public void btnLoadData_onClick(View view) {
         controller.deleteDatabase();
@@ -97,6 +102,8 @@ public class MainActivity extends AppCompatActivity  {
         ArrayList<Enrollment> elist2 = controller.getEnrollmentList();
         controller.addNewEnrollment(3, 3);
         ArrayList<Enrollment> elist3 = controller.getEnrollmentList();
+
+        ArrayList<Attendance> alist1 = controller.getAttendanceListFiltered(0, 4);
 
         int xx = 1;
     }//btnTest_onClick
