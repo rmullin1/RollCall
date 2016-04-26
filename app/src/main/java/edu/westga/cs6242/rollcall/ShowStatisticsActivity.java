@@ -136,13 +136,27 @@ public class ShowStatisticsActivity extends AppCompatActivity implements Adapter
     //No selection for class or student implies ALL
     public void btnShow_onClick(View view) {
         try {
+
+            lblNumDates.setText("0");
+            lblNumClasses.setText("0");
+            lblNumStudents.setText("0");
+            lblNumTotalSeats.setText("0");
+            lblNumFilledSeats.setText("0");
+            lblAverageAttendance.setText("0%");
+
+            //default to all
             int classNo = 0;
             int studentNo = 0;
+
             if (this.schoolClass != null)
                 classNo = this.schoolClass.getClassNo();
-            if (this.student != null) {
+            else if (classBackingList.size() == 1 )
+                classNo = -1;
+
+            if (this.student != null)
                 studentNo = this.student.getStudentNo();
-            }
+            else if (studentBackingList.size() == 1 )
+                studentNo = -1;
 
             ArrayList<Integer> stats =
                     controller.doStatistics(classNo, studentNo);

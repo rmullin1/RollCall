@@ -134,10 +134,21 @@ public class DbAccess {
      */
     public void deleteSchoolClass(SQLiteDatabase db, int classNo) {
         try {
-            String sql =
-                    "DELETE FROM SchoolClass WHERE classNo = ?";
+            String sql;
+
+            sql = "DELETE FROM SchoolClass WHERE classNo = ?";
             Object[] args = {classNo};
             db.execSQL(sql, args);
+
+            //delete any Enrollment for the Class
+            sql = "DELETE FROM Enrollment WHERE classNo = ?";
+            db.execSQL(sql, args);
+
+            //delete any Attendance for the Class
+            sql = "DELETE FROM Attendance WHERE classNo = ?";
+            db.execSQL(sql, args);
+
+
         } catch (Exception ex) {
             throw ex;
         }
@@ -250,10 +261,18 @@ public class DbAccess {
      */
     public void deleteStudent(SQLiteDatabase db, int studentNo) {
         try {
-            String sql =
-                    "DELETE FROM Student WHERE studentNo = ?";
+            String sql = "DELETE FROM Student WHERE studentNo = ?";
             Object[] args = {studentNo};
             db.execSQL(sql, args);
+
+            //delete any Enrollment for the Student
+            sql = "DELETE FROM Enrollment WHERE studentNo = ?";
+            db.execSQL(sql, args);
+
+            //delete any Attendance for the Student
+            sql = "DELETE FROM Attendance WHERE studentNo = ?";
+            db.execSQL(sql, args);
+
         } catch (Exception ex) {
             throw ex;
         }

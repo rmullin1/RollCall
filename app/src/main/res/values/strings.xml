@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">RollCall</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_call_roll">Call Class Roll</string>
+    <string name="title_activity_call_roll">RollCall</string>
 
     <string name="add_new_class">Add New Class</string>
     <string name="new_class_id">New Class ID</string>
