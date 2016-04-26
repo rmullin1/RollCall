@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout02"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/linearLayout01">
 
@@ -108,13 +108,13 @@
 
     <RelativeLayout
         android:layout_width="400dp"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
         android:background="@drawable/control_border2"
         android:layout_alignParentLeft="false"
         android:id="@+id/relativeLayout"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/linearLayout02"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="18dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -183,7 +183,7 @@
             android:layout_marginLeft="5dp"
             android:layout_alignParentBottom="false"
             android:layout_below="@+id/linearLayout6"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="3dp">
 
             <TextView
                 android:layout_width="130dp"
@@ -262,7 +262,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout8"
             android:layout_marginLeft="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="3dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="false"
             android:layout_below="@+id/linearLayout7">

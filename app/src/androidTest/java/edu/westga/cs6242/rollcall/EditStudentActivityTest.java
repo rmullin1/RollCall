@@ -29,9 +29,9 @@ public class EditStudentActivityTest extends ActivityInstrumentationTestCase2<Ed
         assertNotNull(txtFirstName);
         EditText txtLastName = (EditText)activity.findViewById(R.id.txtStudentLastName);
         assertNotNull(txtLastName);
-        TestUtilities.injectText(activity, txtStudentId, "S998");
-        TestUtilities.injectText(activity, txtFirstName, "First 998");
-        TestUtilities.injectText(activity, txtLastName, "Last 998");
+        TestUtilities.injectText(activity, txtStudentId, "S001");
+        TestUtilities.injectText(activity, txtFirstName, "Ann");
+        TestUtilities.injectText(activity, txtLastName, "Andrews");
         instrumentation.waitForIdleSync();
         Button btnUpdate = (Button)activity.findViewById(R.id.btnUpdate);
         assertNotNull(btnUpdate);
@@ -46,7 +46,7 @@ public class EditStudentActivityTest extends ActivityInstrumentationTestCase2<Ed
         Activity activity = this.getActivity();
         Spinner spnStudent = (Spinner)activity.findViewById(R.id.spnStudent);
         assertNotNull(spnStudent);
-        TestUtilities.setSpinnerSelection(activity, spnStudent, 3);
+        TestUtilities.setSpinnerSelection(activity, spnStudent, 11);
         instrumentation.waitForIdleSync();
         Button btnDelete = (Button)activity.findViewById(R.id.btnDelete);
         assertNotNull(btnDelete);

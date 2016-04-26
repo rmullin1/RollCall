@@ -12,7 +12,7 @@ import java.util.Date;
 import edu.westga.cs6242.rollcall.DbHandler;
 import edu.westga.cs6242.rollcall.model.*;
 /**
- * Created by Wayne on 4/12/2016.
+ * Created by Wayne Mullins on 4/12/2016.
  */
 public class DbAccess {
 
@@ -417,6 +417,7 @@ public class DbAccess {
         }
     }//getAttendanceListFiltered()
 
+    //get statistics for Statistics Activity
     public ArrayList<Integer> getAttendanceCountsFiltered(SQLiteDatabase db, int classNo, int studentNo) {
         ArrayList<Integer> attendanceCounts = new ArrayList<Integer>();
         String sql1 = String.format(
@@ -449,9 +450,12 @@ public class DbAccess {
             cursor = db.rawQuery(sql2, null);
             if (cursor.moveToFirst()) {
                 attendanceCounts.add(cursor.getInt(0));
-                int average = (100 * attendanceCounts.get(4))/attendanceCounts.get(3);
+                int average = 0;
+                if (attendanceCounts.get(3) != 0)
+                    average = (100 * attendanceCounts.get(4))/attendanceCounts.get(3);
                 attendanceCounts.add(average);
             }
+            cursor.close();
 
             return attendanceCounts;
         } catch (Exception ex) {
